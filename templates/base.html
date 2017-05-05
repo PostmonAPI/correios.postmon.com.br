@@ -1,0 +1,42 @@
+{%- import "lib.html" as lib -%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        html, body {
+            font-family: Arial;
+            font-size: 10px;
+        }
+        table.listEvent tr td.sroDtEvent, table.listEvent tr td.sroLcEvent {
+            font-size: 1.1em;
+            color: #777777;
+            border-top: 1px dotted #8A8A8A;
+        }
+        table.listEvent tr td.sroLbEvent {
+            font-size: 1.2em;
+            border-top: 1px dotted #8A8A8A;
+        }
+        table.listEvent tr td.sroLbEvent span{
+            font-weight: normal;
+            display:block;
+        }
+        #warnhorarios {
+            font-size: 1.1em;
+            height: 50px;
+        }
+        .foto {
+         width:300px;
+         height:45px;
+         position: relative;
+        }
+        </style>
+    </head>
+    <body>
+        <div align="center">
+            <div>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        {{ lib.ga() -}}
+    </body>
+</html>
