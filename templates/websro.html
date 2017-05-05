@@ -71,7 +71,7 @@ document.onmousedown=verfonte
 {% for evento in objeto.evento -%}
 {% if evento.destino -%}
 <tr><td rowspan=2>{{ evento.data }} {{ evento.hora }}</td><td>{{ evento.local }} - {{ evento.cidade|upper }}/{{ evento.uf }}</td><td><FONT COLOR="000000">{{ evento.descricao }}</font></td></tr>
-<tr><td colspan=2>Encaminhado para CEE MOEMA - SAO PAULO/SP</td></tr>
+<tr><td colspan=2>Encaminhado para {{ evento.destino[0].local }} - {{ evento.destino[0].cidade|upper }}/{{ evento.destino[0].uf }}</td></tr>
 {% else -%}
 <tr><td rowspan=1>{{ evento.data }} {{ evento.hora }}</td><td>{{ evento.local }} - {{ evento.cidade|upper }}/{{ evento.uf }}</td><td><FONT COLOR="000000">{{ evento.descricao }}</font></td></tr>
 {% endif -%}
