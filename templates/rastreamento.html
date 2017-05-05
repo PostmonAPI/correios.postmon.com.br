@@ -1,0 +1,71 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <base href="http://www2.correios.com.br">
+        <style>
+        html, body {
+            font-family: Arial;
+            font-size: 10px;
+        }
+        table.listEvent tr td.sroDtEvent, table.listEvent tr td.sroLcEvent {
+            font-size: 1.1em;
+            color: #777777;
+            border-top: 1px dotted #8A8A8A;
+        }
+        table.listEvent tr td.sroLbEvent {
+            font-size: 1.2em;
+            /*font-weight: bold;*/
+            border-top: 1px dotted #8A8A8A;
+        }
+        table.listEvent tr td.sroLbEvent span{
+            font-weight: normal;
+            display:block;
+        }
+        #warnhorarios {
+            font-size: 1.1em;
+            height: 50px;
+        }
+        .foto {
+         width:300px;
+         height:45px;
+         position: relative;
+        }
+        </style>
+    </head>
+    <body>
+        <div align="center">
+            <div>
+                <h1>
+                    <span>{{ objeto.numero[0:2] }}</span><span>{{ objeto.numero[2:5] }}</span><span>{{ objeto.numero[5:8] }}</span><span>{{ objeto.numero[8:11] }}</span><span>{{ objeto.numero[11:13] }}</span>
+                </h1>
+                </div>
+                <div id="warnhorarios">
+                    <p>O hor&aacute;rio apresentado no hist&oacute;rico do objeto n&atilde;o indica quando a situa&ccedil;&atilde;o ocorreu, mas sim quando os dados foram recebidos pelo sistema, exceto no caso do SEDEX 10 e do SEDEX Hoje, em que ele representa o hor&aacute;rio real da entrega.</p>
+                </div>
+                <div>
+                    <table class="listEvent sro">
+                        {% for evento in objeto.evento -%}
+                        <tr>
+                            <td class="sroDtEvent" valign="top">
+                                {{ evento.data }}<br /> 
+                                {{ evento.hora }}<br />
+                                {{ evento.cidade }} / {{ evento.uf }}<br />
+                            </td>
+                            <td class="sroLbEvent">
+                                <strong>{{ evento.descricao }}</strong> 
+                                <br />
+                                {% if evento.destino -%}
+                                de {{ evento.local }} em {{ evento.cidade }} / {{ evento.uf }}
+                                para {{ evento.destino[0].local }} em {{ evento.destino[0].cidade }} / {{ evento.destino[0].uf }}
+                                {% else -%}
+                                {% endif -%}
+                            </td>
+                        </tr>
+                        {% endfor -%}
+                    </table>
+                 </div>
+            </div>
+        </div>
+    </body>
+</html>
