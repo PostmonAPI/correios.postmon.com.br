@@ -9,7 +9,7 @@ bp = Blueprint('rastreamento', __name__)
 
 
 @bp.route("/")
-def x():
+def index():
     keys = ["P_COD_UNI", "objetos", "objeto"]
     for key in keys:
         objetos = request.args.get(key)
