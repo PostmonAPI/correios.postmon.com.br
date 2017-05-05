@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<TITLE>SRO - Internet</TITLE>
+</HEAD>
+<SCRIPT>
+<!-- Hide from old browsers
+var FormType = "Update";
+var NextField = "P_COD_FIN";
+function JSLNotNull(pctl, pmsg){
+   if (pctl.value == "") { alert(pmsg); pctl.focus(); return false; }
+   return true;
+}
+function JSLMakeUpper(pctl) {
+   pctl.value = pctl.value.toUpperCase();
+}
+function BT_NEWP_OnClick(ctl) {
+   document.forms[0].Z_ACTION.value = ctl.value;
+   document.forms[0].submit();
+   return true;
+}
+function BT_VOLTAR_OnClick(ctl) {
+history.back()
+   return true;
+}
+function IMPRIMIR(ctl) {
+  window.print();
+  return true;
+}
+function verfonte() {
+    if (event.button==2) {
+        window.alert("Não Disponível!");
+    }
+}
+function verObjeto(objeto) {
+    if (objeto.length != 13) {
+        window.alert("Objeto Inválido!");
+     return false;
+    }
+return true;
+}
+document.onmousedown=verfonte
+//-->
+</SCRIPT>
+<BODY BGCOLOR="d8e6ed" TEXT="0000FF" LINK="000000"VLINK="800040" ALINK="0FF000">
+<FORM ACTION="txect01$.ResultList" METHOD="POST">
+<INPUT TYPE="hidden" NAME="Z_START" VALUE="1">
+<INPUT TYPE="hidden" NAME="P_ITEMCODE" VALUE="ES446391025BR">
+<INPUT TYPE="hidden" NAME="P_LINGUA" VALUE="001">
+<INPUT TYPE="hidden" NAME="P_COD_UNI" VALUE="ES446391025BR">
+<INPUT TYPE="hidden" NAME="P_COD_INI" VALUE="">
+<INPUT TYPE="hidden" NAME="P_COD_FIN" VALUE="">
+<INPUT TYPE="hidden" NAME="P_COD_LIS" VALUE="">
+<INPUT TYPE="hidden" NAME="P_TESTE" VALUE="">
+
+<INPUT TYPE="hidden" NAME="P_TIPO" VALUE="001">
+<H1> </H1>
+<FONT face=Arial size=3 color="#000000">
+  <b>
+    {{ objeto.numero }} - Histórico do Objeto</b></font>
+<font face=Arial color=black size=2>
+<br>O horário não indica quando a situação ocorreu, mas sim quando os dados foram recebidos pelo sistema, exceto no caso do <b>SEDEX 10 e do SEDEX Hoje, </b>em que ele  representa o horário real da entrega.<p>
+<table  border cellpadding=1 hspace=10>
+<colgroup style='font:8pt Tahoma;color=Black' valign=top><colgroup style='font:8pt Tahoma; color=Navy'><colgroup style='font:8pt Tahoma;color=Maroon'>
+
+<tr>
+<td><font FACE=Tahoma color='#CC0000' size=2><b>Data</b></font></td>
+
+<td><font FACE=Tahoma color='#CC0000' size=2><b>Local</b></font></td>
+<td><font FACE=Tahoma color='#CC0000' size=2><b>Situação</b></font></td>
+</tr>
+{% for evento in objeto.evento -%}
+{% if evento.destino -%}
+<tr><td rowspan=2>{{ evento.data }} {{ evento.hora }}</td><td>{{ evento.local }} - {{ evento.cidade|upper }}/{{ evento.uf }}</td><td><FONT COLOR="000000">{{ evento.descricao }}</font></td></tr>
+<tr><td colspan=2>Encaminhado para CEE MOEMA - SAO PAULO/SP</td></tr>
+{% else -%}
+<tr><td rowspan=1>{{ evento.data }} {{ evento.hora }}</td><td>{{ evento.local }} - {{ evento.cidade|upper }}/{{ evento.uf }}</td><td><FONT COLOR="000000">{{ evento.descricao }}</font></td></tr>
+{% endif -%}
+{% endfor -%}
+</TABLE>
+<hr width=500 color='#FFCC33' size=1 align=left><FONT face=Tahoma size=2 color=black><center><br><p>por <a href="http://www.postmon.com.br" target="_blank">Postmon</a><p>
+</BODY>
+</HTML>
