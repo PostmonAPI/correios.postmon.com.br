@@ -20,7 +20,7 @@ def get_objetos(keys=["P_COD_UNI", "objetos", "objeto"]):
         if cleaned_objetos == objetos:
             _redirect = None
         else:
-            url = url_for('.index', **{key: cleaned_objetos})
+            url = url_for(request.endpoint, **{key: cleaned_objetos})
             _redirect = redirect(url)
 
         return objetos, _redirect

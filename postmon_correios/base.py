@@ -8,8 +8,7 @@ bp = Blueprint('base', __name__)
 
 @bp.route('/crossdomain.xml')
 def crossdomain():
-    response = current_app.send_static_file('crossdomain.xml')
-    return response
+    return current_app.send_static_file('crossdomain.xml')
 
 
 def init_app(app):
