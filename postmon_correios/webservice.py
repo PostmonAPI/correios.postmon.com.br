@@ -2,12 +2,14 @@
 from __future__ import absolute_import
 
 from flask import Blueprint, jsonify, request
+from flask_cors import CORS
 
 from .correios import Client as CorreiosClient
 
 correios = CorreiosClient()
 
 bp = Blueprint('webservice', __name__)
+CORS(bp)
 
 
 def _filter_data(data, keys):
