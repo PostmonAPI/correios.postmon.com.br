@@ -1,8 +1,9 @@
 # coding: utf-8
 from __future__ import absolute_import
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template
 
+from .utils import get_objetos
 from .webservice import correios
 
 bp = Blueprint('rastreamento', __name__)
@@ -10,11 +11,10 @@ bp = Blueprint('rastreamento', __name__)
 
 @bp.route("/")
 def index():
-    keys = ["P_COD_UNI", "objetos", "objeto"]
-    for key in keys:
-        objetos = request.args.get(key)
-        if objetos is not None:
-            break
+    objetos, _redirect = get_objetos()
+    if _redirect:
+        return _redirect
+
     response = correios.buscaEventos(objetos)
     objeto = response["objeto"][0]
 
