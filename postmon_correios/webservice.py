@@ -4,9 +4,7 @@ from __future__ import absolute_import
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 
-from .correios import Client as CorreiosClient
-
-correios = CorreiosClient()
+from .correios import correios_client
 
 bp = Blueprint('webservice', __name__)
 CORS(bp)
@@ -29,7 +27,7 @@ def buscaEventos():
         values,
         ["objetos", "tipo", "resultado", "lingua"])
     data.setdefault("objetos", None)
-    response = correios.buscaEventos(**data)
+    response = correios_client.buscaEventos(**data)
     return jsonify(response)
 
 
@@ -40,7 +38,7 @@ def buscaEventosLista():
         values,
         ["tipo", "resultado", "lingua"])
     data["objetos"] = request.args.getlist("objetos")
-    response = correios.buscaEventosLista(**data)
+    response = correios_client.buscaEventosLista(**data)
     return jsonify(response)
 
 

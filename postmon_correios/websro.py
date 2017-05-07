@@ -3,8 +3,8 @@ from __future__ import absolute_import
 
 from flask import Blueprint, render_template
 
+from .correios import correios_client
 from .utils import get_objetos
-from .webservice import correios
 
 bp = Blueprint('websro', __name__)
 
@@ -15,7 +15,7 @@ def index():
     if _redirect:
         return _redirect
 
-    response = correios.buscaEventos(objetos)
+    response = correios_client.buscaEventos(objetos)
     return render_template('websro.html', objeto=response["objeto"][0])
 
 
