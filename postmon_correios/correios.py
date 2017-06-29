@@ -3,7 +3,6 @@ from __future__ import absolute_import
 
 from flask import current_app
 from werkzeug.local import LocalProxy
-
 from zeep import Client as Zeep
 from zeep.cache import InMemoryCache
 from zeep.helpers import serialize_object

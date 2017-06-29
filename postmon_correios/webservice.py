@@ -13,14 +13,14 @@ CORS(bp)
 def _filter_data(data, keys):
     _map = {}
     for key in keys:
-        value = request.args.get(key)
+        value = request.values.get(key)
         if value:
             _map[key] = value
 
     return _map
 
 
-@bp.route("/buscaEventos/")
+@bp.route("/buscaEventos/", methods=["GET", "POST"])
 def buscaEventos():
     values = request.values
     data = _filter_data(
@@ -37,7 +37,7 @@ def buscaEventosLista():
     data = _filter_data(
         values,
         ["tipo", "resultado", "lingua"])
-    data["objetos"] = request.args.getlist("objetos")
+    data["objetos"] = request.values.getlist("objetos")
     response = correios_client.buscaEventosLista(**data)
     return jsonify(response)
 
