@@ -1,14 +1,6 @@
 # coding: utf-8
 from __future__ import absolute_import
 
-from flask import current_app, Flask
+import application
 
-import postmon_correios
-
-app = Flask(__name__)
-postmon_correios.init_app(app)
-
-
-@app.route('/crossdomain.xml')
-def crossdomain():
-    return current_app.send_static_file('crossdomain.xml')
+app = application.create_app()

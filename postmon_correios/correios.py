@@ -1,7 +1,7 @@
 # coding: utf-8
 from __future__ import absolute_import
 
-from flask import current_app
+from flask import current_app, request
 from werkzeug.local import LocalProxy
 from zeep import Client as Zeep
 from zeep.cache import InMemoryCache
@@ -13,20 +13,21 @@ correios_client = LocalProxy(lambda: current_app.extensions["correios"])
 
 class Client(object):
     wsdl = 'http://webservice.correios.com.br/service/rastro/Rastro.wsdl'
-    auth = {
-        "usuario": "ECT",
-        "senha": "SRO",
-    }
 
     def __init__(self, app=None):
         if app:
             self.init_app(app)
 
+    @property
+    def service(self):
+        if not hasattr(self, "_service"):
+            client = Zeep(
+                wsdl=self.wsdl,
+                transport=Transport(cache=InMemoryCache()))
+            self._service = client.service
+        return self._service
+
     def init_app(self, app):
-        self.client = Zeep(
-            wsdl=self.wsdl,
-            transport=Transport(cache=InMemoryCache()),
-        )
         app.extensions["correios"] = self
 
     def buscaEventos(self, objetos, tipo="L", resultado="T", lingua="101"):
@@ -35,9 +36,12 @@ class Client(object):
             "tipo": tipo,
             "resultado": resultado,
             "lingua": lingua,
+            # auth
+            "usuario": request.headers.get('x-correios-usuario', "ECT"),
+            "senha": request.headers.get('x-correios-senha', "SRO"),
         }
-        data.update(self.auth)
-        response = self.client.service.buscaEventos(**data)
+
+        response = self.service.buscaEventos(**data)
         return serialize_object(response)
 
     def buscaEventosLista(self, objetos,
@@ -49,5 +53,5 @@ class Client(object):
             "lingua": lingua,
         }
         data.update(self.auth)
-        response = self.client.buscaEventosLista(**data)
+        response = self.service.buscaEventosLista(**data)
         return serialize_object(response)
